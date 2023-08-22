@@ -28,7 +28,7 @@ const Order = ({user,saveToken}) => {
     }
 
     useEffect(()=>{
-        webUser.get(`/medicine`)
+        webUser.get(`/medicine`,{headers:{Authorization:`bearer ${token}`}})
         .then((response) => {
         setAllMed(response.data);
         })
@@ -125,6 +125,11 @@ const Order = ({user,saveToken}) => {
         }
     };
 
+    const onClearError = () => {
+        setAlertData('')
+        setFalseAlert(false)
+        setTrueAlert(false)
+    }
 
     return(
         <div>
@@ -175,7 +180,7 @@ const Order = ({user,saveToken}) => {
                         <div className="mb-2 block">
                             <Label value="Req date" />
                         </div>
-                        <TextInput onChange={(v)=>setReqdate(v.target.value)}/>
+                        <TextInput onChange={(v)=>{setReqdate(v.target.value),onClearError()}}/>
                     </div>
                 </div>
                 {Array.from({length:numMed},(_,index)=>(
@@ -189,19 +194,19 @@ const Order = ({user,saveToken}) => {
                                 isClearable
                                 isSearchable
                                 value={selectMed[index]}
-                                onChange={(inputValue) => handleSelectMed(inputValue, index)}
+                                onChange={(inputValue) => {handleSelectMed(inputValue, index),onClearError()}}
                                 placeholder={"Select Medicine"}
                             />
                         </div>
                         <div className="w-full flex gap-[1em]">
                             <div className="mb-2 block">
                                 <Label value="Exp date" />
-                                <TextInput onChange={(val) => handleExpDateChange(val.target.value, index)} />
+                                <TextInput onChange={(val) => {handleExpDateChange(val.target.value, index),onClearError()}} />
                             </div>
                             
                             <div className="mb-2 block">
                                 <Label value="Quantity" />
-                                <TextInput onChange={(val) => handleQuantity(val.target.value, index)} />
+                                <TextInput onChange={(val) => {handleQuantity(val.target.value, index),onClearError()}} />
                             </div>
                         </div>
                         <div className="w-[45%]">
@@ -211,7 +216,7 @@ const Order = ({user,saveToken}) => {
                             <div>
                                 <Label value="Description" />
                             </div>
-                            <Textarea id="comment" onChange={(val) => handleDescriptionChange(val.target.value, index)} />
+                            <Textarea id="comment" onChange={(val) => {handleDescriptionChange(val.target.value, index),onClearError()}} />
                         </div>
                     </div>
                 ))}

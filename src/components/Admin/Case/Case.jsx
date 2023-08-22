@@ -47,7 +47,7 @@ const CaseAdmin = ({user,saveToken}) => {
             console.log('Error fetching order medicine:', error);
         });
 
-        webUser.get('employee?jobtitle=veterinarian')
+        webUser.get('employee?jobtitle=veterinarian',{headers:{Authorization:`bearer ${token}`}})
         .then((response)=>{
             setAllVet(response.data)
         })
@@ -138,15 +138,13 @@ const CaseAdmin = ({user,saveToken}) => {
 
     const fetchCashier = async () => {
         try {
-            const response = await webUser.get('/employee?jobtitle=cashier')
+            const response = await webUser.get('/employee?jobtitle=cashier',{ headers:{Authorization:`bearer ${token}`} })
             const cashierData = response.data
             setAllCashier(cashierData)
         } catch (error) {
             console.log(error);
         }
     }
-
-    
 
     const onAddData = async (e,data) => {
         try {
@@ -180,6 +178,11 @@ const CaseAdmin = ({user,saveToken}) => {
         }
     }
 
+    const onClearError = () => {
+        setAlertData('')
+        setFalseAlert(false)
+        setTrueAlert(false)
+    }
 
     return(
         <div>
@@ -235,13 +238,13 @@ const CaseAdmin = ({user,saveToken}) => {
                         <div className="mb-2 block">
                             <Label value="Name" />
                         </div>
-                        <TextInput onChange={(e)=>setPetName(e.target.value)}/>
+                        <TextInput onChange={(e)=>{setPetName(e.target.value),onClearError()}}/>
                     </div>   
                     <div className="w-[35%] ">
                         <div className="mb-2 block">
                             <Label value="Select Owner Pet" />
                         </div>
-                        <Select onChange={(e)=>setPetId(e.target.value)}>
+                        <Select onChange={(e)=>{setPetId(e.target.value),onClearError()}}>
                             <option value="">Select Owner Pet</option>
                             {owner?.map((user) => (
                             <option key={user.user_id} value={user.pet_id}>{user.fullname}</option>
@@ -252,11 +255,11 @@ const CaseAdmin = ({user,saveToken}) => {
                         <div className="mb-2 block">
                             <Label value="Pet Weight" />
                         </div>
-                        <TextInput onChange={(e)=>setWeight(e.target.value)}/>
+                        <TextInput onChange={(e)=>{setWeight(e.target.value),onClearError()}}/>
                     </div>  
                     <div  className="w-[60%] mt-[0.5em]">
                         <Label value="Select Veterinarian" />
-                        <Select onChange={(e)=> setVetName(e.target.value)}>
+                        <Select onChange={(e)=> {setVetName(e.target.value),onClearError()}}>
                             <option value="">Select Veterinarian</option>
                             {allVet?.map((data) => (
                             <option key={data.employee_id} value={data.employee_id}>{data.e_name}</option>
@@ -267,13 +270,13 @@ const CaseAdmin = ({user,saveToken}) => {
                         <div className="mb-2 block">
                             <Label value="Price" />
                         </div>
-                        <TextInput type="number" onChange={(e)=>setPrice(e.target.value)} />
+                        <TextInput type="number" onChange={(e)=>{setPrice(e.target.value),onClearError()}} />
                     </div> 
                     <div className="w-[60%]">
                         <div className="mb-2 block">
                             <Label value="Cashier Name" />
                         </div>
-                        <Select onChange={(e)=>{setCashier(e.target.value)}}>
+                        <Select onChange={(e)=>{setCashier(e.target.value),onClearError()}}>
                             <option value="">Select Cashier</option>
                             {allCashier.map((data) => (
                                 <option key={data.e_name} value={data.employee_id}>{data.e_name}</option>
@@ -284,7 +287,7 @@ const CaseAdmin = ({user,saveToken}) => {
                         <div className="mb-2 block">
                             <Label value="Follow?" />
                         </div>
-                        <Select onChange={(e)=>setFollow(e.target.value)} required >
+                        <Select onChange={(e)=>{setFollow(e.target.value),onClearError()}} required >
                             <option >Case have to following?</option>
                             <option value={"yes"}>Yes</option>
                             <option value={"no"}>No</option>
@@ -294,13 +297,13 @@ const CaseAdmin = ({user,saveToken}) => {
                         <div className="mb-2 block">
                             <Label value="finding" />
                         </div>
-                        <Textarea id="comment" rows={4} onChange={(e) => setFinding(e.target.value)}/>
+                        <Textarea id="comment" rows={4} onChange={(e) => {setFinding(e.target.value),onClearError()}}/>
                     </div>  
                     <div className="w-[49%]">
                         <div className="mb-2 block">
                             <Label value="complains" />
                         </div>
-                        <Textarea id="comment" rows={4} onChange={(e) => setComplains(e.target.value)}/>
+                        <Textarea id="comment" rows={4} onChange={(e) => {setComplains(e.target.value),onClearError()}}/>
                     </div>  
                     <Button onClick={onAddData} className="m-auto w-[30em] my-[20px]" color='success'>Add Data</Button>
                 </div>

@@ -27,7 +27,7 @@ const Pet = ({user,saveToken}) => {
   }
 
   useEffect(()=>{
-    webUser.get(`/user?fullname=${owner}`)
+    webUser.get(`/user?fullname=${owner}`,{headers:{Authorization:`bearer ${token}`}})
       .then((response) => {
         setUsers(response.data);
       })

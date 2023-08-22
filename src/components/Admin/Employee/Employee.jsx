@@ -31,7 +31,7 @@ const Employee = ({user,saveToken}) => {
             setKeyTitle('VEA')
         }
         if(title){
-            webUser.get(`/employee?employee_id=${keyTitle}`)
+            webUser.get(`/employee?employee_id=${keyTitle}`,{headers:{Authorization:`bearer ${token}`}})
             .then((response)=>{
                 const number = response.data.length
                 const paddedNumber = String(number+1).padStart(3, "0");
