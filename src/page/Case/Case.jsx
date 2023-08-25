@@ -2,9 +2,12 @@ import { Menu, Footer } from "@/components"
 
 import { webUser,useToken } from "@/utils"
 import { useEffect,useState } from "react"
-import { Label, Radio } from 'flowbite-react';
+import { Label, Radio,Modal } from 'flowbite-react';
 
 const Case = ({user,clearToken}) => {
+
+    const [openModal, setOpenModal] = useState();
+  const props = { openModal, setOpenModal };
 
     const[pet,setPet] = useState()
     const[selectedPet,setSelectedPet] = useState(null)
@@ -117,66 +120,82 @@ const Case = ({user,clearToken}) => {
                                             <th scope="col" class="px-6 py-3">
                                                 Follow
                                             </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                medicine
+                                            </th>
                                         </tr>
                                     </thead>
                             {showcase ? (
                             showcase.map((data) => (
-                                            <tbody key={data.case_id} >
-                                                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                        {data.case_id}
-                                                    </th>
-                                                    <td class="px-6 py-4 capitalize">
-                                                        {data.e_name}
-                                                    </td>
-                                                    <td class="px-6 py-4">
-                                                        {data.price}
-                                                    </td>
-                                                    <td class="px-6 py-4">
-                                                        {data.findings}
-                                                    </td>
-                                                    <td class="px-6 py-4">
-                                                        {data.date_start.split('T')[0]}
-                                                    </td>
-                                                    <td class="px-6 py-4">
-                                                        {data.date_end.split('T')[0]}
-                                                    </td>
-                                                    <td class="px-6 py-4">
-                                                        {data.follow}
-                                                    </td>
-                                                </tr>
-                                            </tbody>
+                                <tbody key={data.case_id} >
+                                    <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                        <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
+                                            {data.case_id}
+                                        </th>
+                                        <td class="px-6 py-4 capitalize text-center">
+                                            {data.e_name}
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            {data.price}
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            {data.findings}
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            {data.date_start.split('T')[0]}
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            {data.date_end.split('T')[0]}
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            {data.follow}
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                        <div className="text-[#2D86FF] cursor-pointer" onClick={() => props.setOpenModal('default')}>Link</div>
+                                            <Modal show={props.openModal === 'default'} onClose={() => props.setOpenModal(undefined)}>
+                                                <Modal.Header>Medicine And Vaccine in This Case</Modal.Header>
+                                                <Modal.Body>
+                                                    {data.med_order.map((med)=>(<div className="space-y-6">
+                                                        <p className="my-[1em]">
+                                                            <div>Medicine Name: {med.medicine_name}</div>
+                                                            <div>Type: {med.type}</div>
+                                                            <div>Exp Date: {med.exp_date}</div>
+                                                        </p>                                 
+                                                    </div>))}
+                                                </Modal.Body>
+                                                <Modal.Footer>
+                                                </Modal.Footer>
+                                            </Modal>
+                                    </td>
+                                </tr>
+                            </tbody>
                                                      ))
                         ) : (
                             <tbody>
                                 <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                        Null
-                                                    </th>
-                                                    <td class="px-6 py-4">
-                                                        Null
-                                                    </td>
-                                                    <td class="px-6 py-4">
-                                                        Null
-                                                    </td>
-                                                    <td class="px-6 py-4">
-                                                        Null
-                                                    </td>
-                                                    <td class="px-6 py-4">
-                                                        Null
-                                                    </td>
-                                                </tr>
-                                            </tbody>
+                                        Null
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        Null
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        Null
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        Null
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        Null
+                                    </td>
+                                </tr>
+                            </tbody>
                         )}
-                                        </table>
-                                    </div>
-
-                                </div>
-                   
+                        </table>
+                        </div>
+                    </div>
                     </div>}
-
                 </div>
-               
             </div>
         <Footer />
     </div>

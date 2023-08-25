@@ -13,4 +13,7 @@ export default defineConfig({
       "@page": path.resolve(__dirname, "./src/page"),
     },
   },
+  build: {
+    outDir: "dist",
+  },
 });

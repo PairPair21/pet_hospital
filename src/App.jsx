@@ -1,6 +1,6 @@
 import { RouterProvider,createBrowserRouter} from 'react-router-dom';
 import './App.css'
-import { Home, Register,About,Service,Login,OwnerPet,Case,Admin } from '@page'
+import { Home, Register,About,Service,OwnerPet,Case,Admin } from '@page'
 import { useToken } from './utils'
 
 function App() {
@@ -15,10 +15,6 @@ function App() {
     {
       path:"/register",
       element:<Register />
-    },
-    {
-      path:"/login",
-      element:<Login setToken={saveToken} setRole={saveRole} setUser={saveUser} user={user} />
     },
     {
       path:"/aboutus",

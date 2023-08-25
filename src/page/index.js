@@ -2,9 +2,8 @@ import Home from "./Home/Home";
 import Register from "./Register/Register";
 import About from "./AboutUs/AboutUs";
 import Service from "./Service/Service";
-import Login from "./Login/Login";
 import OwnerPet from "./OwnerPet/OwnerPet";
 import Case from "./Case/Case";
 import Admin from "./Admin/Admin";
 
-export { Home, Register, About, Service, Login, OwnerPet, Case, Admin };
+export { Home, Register, About, Service, OwnerPet, Case, Admin };
